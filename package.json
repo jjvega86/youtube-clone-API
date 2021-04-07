@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jjvega86/youtube-clone-API/issues"
   },
-  "homepage": "https://github.com/jjvega86/youtube-clone-API#readme"
+  "homepage": "https://github.com/jjvega86/youtube-clone-API#readme",
+  "dependencies": {
+    "mongoose": "^5.12.3"
+  }
 }
