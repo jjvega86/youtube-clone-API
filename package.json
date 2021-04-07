@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jjvega86/youtube-clone-API#readme",
   "dependencies": {
+    "config": "^3.3.6",
     "mongoose": "^5.12.3"
   }
 }
