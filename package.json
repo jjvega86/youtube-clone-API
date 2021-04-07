@@ -1,0 +1,19 @@
+{
+  "name": "youtube-clone-api",
+  "version": "1.0.0",
+  "description": "YouTube Clone App Wrapper API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjvega86/youtube-clone-API.git"
+  },
+  "author": "JJ Vega",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjvega86/youtube-clone-API/issues"
+  },
+  "homepage": "https://github.com/jjvega86/youtube-clone-API#readme"
+}
