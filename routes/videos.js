@@ -3,6 +3,14 @@ const express = require('express')
 const router = express.Router()
 
 // All endpoints and route handlers go here!
+router.get('/', async (req, res) => {
+    try{
+        const videos = await Video.find()
+        return res.send(videos)
+    } catch(ex){
+        return res.status(500).send(`Internal Server Error: ${ex}`)
+    }
+})
 
 router.post('/', async (req, res) => {
     try{
