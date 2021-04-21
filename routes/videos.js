@@ -77,4 +77,17 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// DELETE a single video
+router.delete('/:id', async (req,res) => {
+    try{
+        const video = await Video.findByIdAndDelete(req.params.id);
+        if(!video) return res.status(400).send(`The video with id "${req.params.id}" does not exist.`)
+        return res.send(video);
+
+    }catch(ex){
+        return res.status(500).send(`Internal Server Error: ${ex}`)
+    }
+})
+
+
 module.exports = router;
