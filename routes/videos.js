@@ -1,4 +1,4 @@
-const Video = require('../models/video');
+const {Video, validate} = require('../models/video');
 const express = require('express')
 const router = express.Router()
 
@@ -6,7 +6,11 @@ const router = express.Router()
 
 router.post('/', async (req, res) => {
     try{
-        // add validation middleware before posting. Need to make sure request is properly formatted
+        // validate the request body format before creating Video and adding to MongoDb
+        const {error} = validate(req.body)
+        if(error)
+            return res.status(400).send(error)
+        
         const video = new Video({
             name: req.body.name,
             videoId: req.body.videoId,
