@@ -1,6 +1,7 @@
 const connectDb = require("./startup/db");
 const express = require("express");
 const app = express();
+const videos = require('./routes/videos')
 
 connectDb();
 
