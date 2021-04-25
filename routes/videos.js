@@ -69,6 +69,22 @@ router.post("/", async (req, res) => {
   }
 });
 
+// POST a single comment to a video by videoId
+router.post("/comments", async (req, res) => {
+  try {
+    const video = await Video.find({ videoId: req.body.videoId });
+    if (!video)
+      return res
+        .status(400)
+        .send(`Video with id ${req.body.videoId} does not exist!`);
+    video.comments.push(req.body.comment);
+    await video.save();
+    return res.send(video);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 // PUT (UPDATE) a single video
 router.put("/:id", async (req, res) => {
   try {
