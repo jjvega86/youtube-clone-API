@@ -29,6 +29,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// GET all of the comments for a video by videoId
+router.get("/comments/:videoId", async (req, res) => {
+  try {
+    const video = await Video.find({ videoId: req.params.videoId });
+    if (!video)
+      return res
+        .status(400)
+        .send(`The video with id "${req.params.videoId}" does not exist`);
+
+    return res.send(video[0].comments);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 // POST a single video
 router.post("/", async (req, res) => {
   try {
@@ -50,7 +65,7 @@ router.post("/", async (req, res) => {
 });
 
 // PUT (UPDATE) a single video
-router.put('/:id', async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error);
@@ -78,16 +93,17 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a single video
-router.delete('/:id', async (req,res) => {
-    try{
-        const video = await Video.findByIdAndDelete(req.params.id);
-        if(!video) return res.status(400).send(`The video with id "${req.params.id}" does not exist.`)
-        return res.send(video);
-
-    }catch(ex){
-        return res.status(500).send(`Internal Server Error: ${ex}`)
-    }
-})
-
+router.delete("/:id", async (req, res) => {
+  try {
+    const video = await Video.findByIdAndDelete(req.params.id);
+    if (!video)
+      return res
+        .status(400)
+        .send(`The video with id "${req.params.id}" does not exist.`);
+    return res.send(video);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
 
 module.exports = router;
