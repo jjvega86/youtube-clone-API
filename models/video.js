@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const videoSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 2, maxlength: 255 },
-  videoId: { type: Number, required: true },
+  videoId: { type: String, required: true },
   description: { type: String, required: true, minlength: 2, maxlength: 1000 },
   comments: [
     {
@@ -34,7 +34,7 @@ const Video = mongoose.model("Video", videoSchema);
 function validateVideo(video) {
   const schema = Joi.object({
     name: Joi.string().min(2).max(255).required(),
-    videoId: Joi.number().required(),
+    videoId: Joi.string().required(),
     description: Joi.string().min(2).max(1000).required(),
   });
 
