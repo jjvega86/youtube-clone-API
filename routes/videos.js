@@ -50,6 +50,11 @@ router.post("/", async (req, res) => {
     // validate the request body format before creating Video and adding to MongoDb
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error);
+    const foundVideo = await Video.find({ videoId: req.body.videoId });
+    if (foundVideo)
+      return res
+        .status(409)
+        .send(`Video with videoId ${req.body.videoId} already exists`);
 
     const video = new Video({
       name: req.body.name,
