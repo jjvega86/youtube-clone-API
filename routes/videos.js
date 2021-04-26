@@ -32,13 +32,13 @@ router.get("/:id", async (req, res) => {
 // GET all of the comments for a video by videoId
 router.get("/comments/:videoId", async (req, res) => {
   try {
-    const video = await Video.find({ videoId: req.params.videoId });
+    const video = await Video.findOne({ videoId: req.params.videoId });
     if (!video)
       return res
         .status(400)
         .send(`The video with id "${req.params.videoId}" does not exist`);
 
-    return res.send(video[0].comments);
+    return res.send(video.comments);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
@@ -50,11 +50,11 @@ router.post("/", async (req, res) => {
     // validate the request body format before creating Video and adding to MongoDb
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error);
-    const foundVideo = await Video.find({ videoId: req.body.videoId });
+    const foundVideo = await Video.findOne({ videoId: req.body.videoId });
     if (foundVideo)
       return res
         .status(409)
-        .send(`Video with videoId ${req.body.videoId} already exists`);
+        .send(`Video with videoId "${req.body.videoId}" already exists`);
 
     const video = new Video({
       name: req.body.name,
@@ -125,6 +125,30 @@ router.delete("/:id", async (req, res) => {
       return res
         .status(400)
         .send(`The video with id "${req.params.id}" does not exist.`);
+    return res.send(video);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.delete("/comments/:id/:commentId", async (req, res) => {
+  try {
+    const video = await Video.findOne(req.params.id);
+    if (!video)
+      return res
+        .status(400)
+        .send(`The video with id "${req.params.id}" does not exist.`);
+
+    const newComments = video.comments.filter((comment) => {
+      if (comment.commentId != req.params.commentId) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    video.comments = newComments;
+    video.save();
     return res.send(video);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
