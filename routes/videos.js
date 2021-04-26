@@ -133,7 +133,7 @@ router.delete("/:id", async (req, res) => {
 
 router.delete("/comments/:id/:commentId", async (req, res) => {
   try {
-    const video = await Video.findOne(req.params.id);
+    const video = await Video.findOne({ videoId: req.params.id });
     if (!video)
       return res
         .status(400)
