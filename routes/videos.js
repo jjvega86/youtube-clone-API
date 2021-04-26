@@ -69,17 +69,20 @@ router.post("/", async (req, res) => {
   }
 });
 
-// POST a single comment to a video by videoId
-router.post("/comments", async (req, res) => {
+// PUT a single comment to a video by videoId
+router.put("/comments", async (req, res) => {
   try {
-    const video = await Video.find({ videoId: req.body.videoId });
-    if (!video)
-      return res
-        .status(400)
-        .send(`Video with id ${req.body.videoId} does not exist!`);
-    video.comments.push(req.body.comment);
+    const video = await Video.findOne({ videoId: req.body.videoId });
+
+    comment = {
+      author: req.body.comment.author,
+      date: req.body.comment.date,
+      text: req.body.comment.text,
+    };
+
+    video.comments.push(comment);
     await video.save();
-    return res.send(video);
+    return res.send(video.comments);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
