@@ -70,7 +70,7 @@ router.post("/", async (req, res) => {
 });
 
 // PUT a single comment to a video by videoId
-router.put("/comments", async (req, res) => {
+router.post("/comments", async (req, res) => {
   try {
     const video = await Video.findOne({ videoId: req.body.videoId });
 
