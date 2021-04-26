@@ -7,6 +7,11 @@ const videoSchema = new mongoose.Schema({
   description: { type: String, required: true, minlength: 2, maxlength: 1000 },
   comments: [
     {
+      commentId: {
+        type: String,
+        minlength: 2,
+        maxlength: 50,
+      },
       author: {
         type: String,
         required: true,

@@ -75,6 +75,7 @@ router.put("/comments", async (req, res) => {
     const video = await Video.findOne({ videoId: req.body.videoId });
 
     comment = {
+      commentId: req.body.videoId + video.comments.length,
       author: req.body.comment.author,
       date: req.body.comment.date,
       text: req.body.comment.text,
